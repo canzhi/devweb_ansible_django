@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block title %}
+    添加模块
+{% endblock %}
+
+
+{% block content %}
+    <form action="" class="form-inline" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>模块名：</label>
+            <input class="form-control" type="text" name="module_name">
+        </div>
+        <div class="form-group">
+            <label>参数：</label>
+            <input class="form-control" type="text" name="arg_text">
+        </div>
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" value="提交">
+        </div>
+    </form>
+    <table class="table table-striped table-hover table-bordered">
+        <tr class="info">
+            <td>模块</td>
+            <td>参数</td>
+        </tr>
+        {% for module in modules %}
+            <tr>
+                <td>
+                    {{ module.module_name }}
+                </td>
+                <td>
+                    <ul class="list-unstyled">
+                        {% for argv in module.argument_set.all %}
+                            <li>
+                                {{ argv.arg_text }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="">删除</a>
+                            </li>
+                        {% endfor %}
+
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+
+    </table>
+{% endblock %}
