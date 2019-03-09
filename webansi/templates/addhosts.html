@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    添加主机
+{% endblock %}
+
+{% block content %}
+    <form action="" class="form-inline" method="post">
+    {% csrf_token %}
+        <div class="form-group">
+            <label>主机名:</label>
+            <input class="form-control" type="text" name="hostname"/>
+        </div>
+        <div class="form-group">
+            <label>IP:</label>
+            <input class="form-control" type="text" name="ip"/>
+        </div>
+        <div class="form-group">
+            <label>主机组:</label>
+            <input class="form-control" type="text" name="group"/>
+        </div>
+
+
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" value="提交"/>
+        </div>
+    </form>
+
+    <table class="table table-bordered table-hover table-striped">
+        <tr class="info">
+            <td>主机组</td>
+            <td>主机</td>
+        </tr>
+        {% for group in groups %}
+            <tr>
+                <td class="h3">{{ group.group_name }}</td>
+                <td class="h4">
+                    <ul class="list-unstyled">
+                        {% for host in group.host_set.all %}
+                            <li>
+                                {{ host.hostname }}:{{ host.ipaddr }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
+{% endblock %}
